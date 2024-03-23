@@ -1,11 +1,16 @@
 package com.example.registerchangenew;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class FunnyUpercase {
-    public static String toFunnyUpercase(String textInit, boolean isSwitchOn) {
+    public static String toFunnyUpercase(String textInit, Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("AppSettings", Context.MODE_PRIVATE);
+        boolean isSwitchOn = sharedPreferences.getBoolean("SwitchState", true);
+
         StringBuilder str2 = new StringBuilder();
         StringBuilder text = new StringBuilder(textInit.toLowerCase());
         boolean NotUpperCase = false;
-        isSwitchOn = false; //!!!!  не работат, понять почему  !!!!
         int i = isSwitchOn ? 0 : 1;
         if (!isSwitchOn)
             str2.append(text.charAt(0));

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String originalText = inputText.getText().toString();
-                String modifiedText = FunnyUpercase.toFunnyUpercase(originalText, switchState);
+                String modifiedText = FunnyUpercase.toFunnyUpercase(originalText, MainActivity.this);
                 resultText.setText(modifiedText);
             }
         });

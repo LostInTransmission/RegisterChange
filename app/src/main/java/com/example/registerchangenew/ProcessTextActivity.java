@@ -15,7 +15,7 @@ public class ProcessTextActivity extends AppCompatActivity{
             //boolean isSwitchOn = SettingsActivity.swichState;
             // Обработайте текст
             if(text!=null){
-                String processedText = FunnyUpercase.toFunnyUpercase(text.toString(),true);
+                String processedText = FunnyUpercase.toFunnyUpercase(text.toString(),this);
 
                 Intent data = new Intent();
                 data.putExtra(Intent.EXTRA_PROCESS_TEXT, processedText);
