@@ -20,6 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Включение кнопки "Назад" в ActionBar
+        //ДЛЯ ПРОВЕРКИ ПУША
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
