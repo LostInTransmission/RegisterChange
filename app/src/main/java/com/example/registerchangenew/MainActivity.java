@@ -1,5 +1,7 @@
 package com.example.registerchangenew;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.RemoteInput;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -88,22 +91,55 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public class ReplyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+            if (remoteInput != null) {
+                CharSequence replyText = remoteInput.getCharSequence("key_reply");
+                // Тут код для обработки replyText, например, отправка введенного текста в ваше приложение
+            }
+        }
+    }
     private void showNotification() {
+        // Проверяем разрешение на отправку уведомлений
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            // Создание интента, который откроет вашу активность при нажатии на уведомление
-            Intent intent = new Intent(this, ProcessTextActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+            // Ключ для извлечения введенного текста
+            final String KEY_REPLY = "key_reply";
 
-            // Построение уведомления
+            // Создаем RemoteInput, чтобы пользователи могли вводить текст прямо в уведомлении
+            RemoteInput remoteInput = new RemoteInput.Builder(KEY_REPLY)
+                    .setLabel("Введите ответ здесь...")
+                    .build();
+
+            // Создаем PendingIntent для BroadcastReceiver, который обработает введенный текст
+            Intent replyIntent = new Intent(this, ReplyReceiver.class);
+            PendingIntent replyPendingIntent = PendingIntent.getBroadcast(
+                    this,
+                    0,
+                    replyIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+            // Создаем действие для уведомления, которое позволит пользователю ввести текст
+            NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(
+                    R.drawable.ic_send, // Иконка действия (замените на вашу иконку отправки)
+                    "ИЗМЕНИТЬ", // Текст действия
+                    replyPendingIntent)
+                    .addRemoteInput(remoteInput)
+                    .build();
+
+            // Построение уведомления с добавлением возможности прямого ответа
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MyApplication.CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentTitle("Пример уведомления")
-                    .setContentText("Нажмите, чтобы открыть приложение")
+                    .setSmallIcon(R.drawable.ic_launcher_foreground) // Иконка уведомления
+                    .setContentTitle("Пример уведомления с ответом") // Заголовок уведомления
+                    .setContentText("Попробуйте ответить прямо из уведомления!") // Текст уведомления
+                    .addAction(replyAction) // Добавляем действие с возможностью ответа
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
+                    .setContentIntent(pendingIntent) // Intent, который будет вызван при нажатии на уведомление
+                    .setAutoCancel(true); // Уведомление закроется после нажатия
 
-            // Получаем экземпляр NotificationManagerCompat и отправляем уведомление
+            // Отправка уведомления
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());
         } else {
@@ -111,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS);
         }
     }
+
 
 
 }
