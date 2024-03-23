@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">RegisterChangeNEW</string>
+    <string name="app_name">RegisterChange</string>
+    <string name="switch_big_letter_first">Big letter first</string>
 </resources>
