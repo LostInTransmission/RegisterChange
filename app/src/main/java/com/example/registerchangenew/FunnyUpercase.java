@@ -7,7 +7,7 @@ public class FunnyUpercase {
         boolean NotUpperCase = false;
         isSwitchOn = false; //!!!!  не работат, понять почему  !!!!
         int i = isSwitchOn ? 0 : 1;
-        if (isSwitchOn)
+        if (!isSwitchOn)
             str2.append(text.charAt(0));
         for (; i < text.length(); i++) {
             char ch = text.charAt(i);
