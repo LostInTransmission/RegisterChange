@@ -10,7 +10,37 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RegisterChangeNEW"
-        tools:targetApi="31" />
+        android:theme="@style/Theme.RegisterChange"
+        tools:targetApi="31">
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/AppTheme"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Untill here everything works -->
+
+        <activity
+            android:name=".ProcessTextActivity"
+            android:exported="true"
+            android:label="Для Важных Переговоров">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>
