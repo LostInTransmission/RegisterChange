@@ -2,4 +2,9 @@
     <string name="app_name">RegisterChangeNEW</string>
     <string name="switch_big_letter_first">Big letter first</string>
     <string name="settings_activity_title">Settings</string>
+    <string name="InputText">Введите текст</string>
+    <string name="ChangeRegister">Изменить регистр</string>
+    <string name="SettingsString">Настройки</string>
+    <string name="channel_name">Уведомления</string>
+    <string name="channel_description">Описание канала уведомлений</string>
 </resources>
