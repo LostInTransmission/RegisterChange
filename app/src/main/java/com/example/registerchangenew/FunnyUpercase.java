@@ -5,8 +5,10 @@ public class FunnyUpercase {
         StringBuilder str2 = new StringBuilder();
         StringBuilder text = new StringBuilder(textInit.toLowerCase());
         boolean NotUpperCase = false;
-        isSwitchOn = true; //!!!!  не работат, понять почему  !!!!
+        isSwitchOn = false; //!!!!  не работат, понять почему  !!!!
         int i = isSwitchOn ? 0 : 1;
+        if (isSwitchOn)
+            str2.append(text.charAt(0));
         for (; i < text.length(); i++) {
             char ch = text.charAt(i);
             if (((Character.isLetter(ch) || (ch == ' ')) && !NotUpperCase) || (ch == ' ')) {
