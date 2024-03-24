@@ -37,16 +37,6 @@ public class MainActivity extends AppCompatActivity {
         Button changeCaseButton = findViewById(R.id.changeCaseButton);
         final TextView resultText = findViewById(R.id.resultText);
 
-
-//        changeCaseButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String originalText = inputText.getText().toString();
-//                String modifiedText = FunnyUpercase.toFunnyUpercase(originalText, MainActivity.this);
-//                resultText.setText(modifiedText);
-//            }
-//        }); ТОЖЕ САМОЕ ЧТО НАПИСАНО СНИЗУ
-
         changeCaseButton.setOnClickListener(view -> {
             String originalText = inputText.getText().toString();
             String modifiedText = FunnyUpercase.toFunnyUpercase(originalText, MainActivity.this);
@@ -123,12 +113,14 @@ public class MainActivity extends AppCompatActivity {
 
             // Создаем действие для уведомления, которое позволит пользователю ввести текст
             NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(
-                    R.drawable.ic_send, // Иконка действия (замените на вашу иконку отправки)
+                    R.drawable.freeIconAppNet, // Иконка действия (замените на вашу иконку отправки)
                     "ИЗМЕНИТЬ", // Текст действия
                     replyPendingIntent)
                     .addRemoteInput(remoteInput)
                     .build();
 
+            Intent intent = new Intent(this, MainActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             // Построение уведомления с добавлением возможности прямого ответа
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MyApplication.CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_launcher_foreground) // Иконка уведомления
@@ -136,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     .setContentText("Попробуйте ответить прямо из уведомления!") // Текст уведомления
                     .addAction(replyAction) // Добавляем действие с возможностью ответа
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent) // Intent, который будет вызван при нажатии на уведомление
+                    .setContentIntent(contentIntent) // Intent, который будет вызван при нажатии на уведомление
                     .setAutoCancel(true); // Уведомление закроется после нажатия
 
             // Отправка уведомления
