@@ -1,5 +1,7 @@
 package com.example.registerchangenew;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -23,6 +25,10 @@ public class FunnyUpercase {
                 NotUpperCase = false;
                 str2.append(ch);
             }
+            // Копирование обработанного текста в буфер обмена
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("processed text", str2.toString());
+            clipboard.setPrimaryClip(clip);
         }
         return str2.toString();
     }
